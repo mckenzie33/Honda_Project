@@ -1,4 +1,5 @@
 CapstoneHonda::Application.routes.draw do
+  get "password_resets/new"
   resources :mat_memberships
 
   resources :memberships
@@ -21,6 +22,7 @@ CapstoneHonda::Application.routes.draw do
   resources :materials do
     get :reset_filterrific, :on => :collection
   end
+
   resources :users
 
   resources :sessions, only: [:new, :create, :destroy]

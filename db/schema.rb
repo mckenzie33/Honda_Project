@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140412235849) do
+ActiveRecord::Schema.define(version: 20150209172423) do
 
   create_table "groups", force: true do |t|
     t.string   "groupname"
@@ -91,6 +91,8 @@ ActiveRecord::Schema.define(version: 20140412235849) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.string   "avatar"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

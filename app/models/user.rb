@@ -10,9 +10,20 @@ class User < ActiveRecord::Base
   VALID_EMAIL_REGREX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with:        VALID_EMAIL_REGREX }, uniqueness: { case_sensitive: false }
   has_secure_password
-  validates :password, length: { minimum: 6 }
+  validates :password, length: { minimum: 6, :allow_blank => true }
   mount_uploader :avatar, AvatarUploader
-
+  #This method is associated with password reset, it generates a pw reset token
+  def send_password_reset
+    generate_token(:password_reset_token)
+    self.password_reset_sent_at = Time.zone.now
+    save!
+    UserMailer.password_reset(self).deliver
+  end
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
+  end
   def User.new_remember_token
     SecureRandom.urlsafe_base64
   end

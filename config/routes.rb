@@ -1,9 +1,12 @@
 CapstoneHonda::Application.routes.draw do
+  
   resources :mat_memberships
 
   resources :memberships
-
+	
   resources :groups
+
+  resources :password_resets
 
   match '/testfiles/download', :controller => 'testfiles', :action => 'download', via: 'get'
   match '/materials/download', :controller => 'materials', :action => 'download', via: 'get'
